@@ -56,9 +56,9 @@ A web application that simulates how traffic lights work with proper color seque
 
 The traffic light simulation follows the standard cycle:
 
-1. **Red** - Stop (duration: 20 seconds)
-2. **Green** - Go (duration: 20 seconds)
-3. **Yellow** - Prepare to stop (duration: 5 seconds)
+1. **Red** - Stop (duration: 3 seconds)
+2. **Yellow** - Prepare to stop (duration: 2 seconds)
+3. **Green** - Go (duration: 3 seconds)
 
 The application uses JavaScript to control the timer and automatically change the light colors. Users can see the currently active light and the remaining time before changing to the next color.
 
