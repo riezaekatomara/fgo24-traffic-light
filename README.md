@@ -10,8 +10,6 @@
 
 A web application that simulates how traffic lights work with proper color sequence and timers. Built with Node.js and Express on the server side, along with HTML, CSS, and JavaScript on the client side.
 
-![Application Screenshot](https://i.ibb.co/placeholder-image/traffic-light-screenshot.png)
-
 ## ✨ Features
 
 - 🚥 Realistic traffic light simulation
