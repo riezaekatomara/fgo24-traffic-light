@@ -93,4 +93,4 @@ Contributions are always welcome! Feel free to submit a pull request or open an 
 
 ---
 
-Made with ❤️ as part of FGO24 (Fresh Graduate Open 2024)
+Made with ❤️ as part of FGO24 (Kodacademy)
