@@ -1,20 +1,28 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lampu Lalu Lintas</title>
+    <title>Traffic Light</title>
     <link rel="stylesheet" href="./css/styles.css" />
     <script src="./js/script.js" defer></script>
   </head>
   <body>
-    <div class="container">
-      <div class="traffic-light">
-        <div id="redLight" class="light"></div>
-        <div id="yellowLight" class="light"></div>
-        <div id="greenLight" class="light"></div>
-      </div>
-      <button id="startButton">Mulai Siklus</button>
+    <div class="traffic-light-container">
+      <div class="light red"></div>
+      <div class="light yellow"></div>
+      <div class="light green"></div>
+    </div>
+
+    <div class="status">Status: Berhenti</div>
+
+    <div class="controls">
+      <button id="startBtn" onclick="startTrafficLight()">Mulai</button>
+      <button id="stopBtn" onclick="stopTrafficLight()">Berhenti</button>
+    </div>
+
+    <div class="runningLed">
+      <div>Hati-hati dalam berkendara! Patuhi lampu lalu lintas!</div>
     </div>
   </body>
 </html>

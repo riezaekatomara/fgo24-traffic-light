@@ -1,56 +1,67 @@
-const redLight = document.getElementById("redLight");
-const yellowLight = document.getElementById("yellowLight");
-const greenLight = document.getElementById("greenLight");
-const startButton = document.getElementById("startButton");
+const redLight = document.querySelector(".light.red");
+const yellowLight = document.querySelector(".light.yellow");
+const greenLight = document.querySelector(".light.green");
+const statusText = document.querySelector(".status");
 
 let isRunning = false;
 
-function resetLights() {
-  redLight.className = "light";
-  yellowLight.className = "light";
-  greenLight.className = "light";
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function turnOnRed() {
-  resetLights();
-  redLight.className = "light active-red";
+function turnOffAllLights() {
+  redLight.classList.remove("active");
+  yellowLight.classList.remove("active");
+  greenLight.classList.remove("active");
 }
 
-function turnOnYellow() {
-  resetLights();
-  yellowLight.className = "light active-yellow";
+function updateStatus(text) {
+  statusText.textContent = `Status: ${text}`;
 }
 
-function turnOnGreen() {
-  resetLights();
-  greenLight.className = "light active-green";
-}
+async function runTrafficCycle() {
+  while (isRunning) {
+    turnOffAllLights();
+    redLight.classList.add("active");
+    updateStatus("Berhenti");
+    await wait(5000);
 
-function startTrafficLightCycle() {
-  if (isRunning) return;
+    if (!isRunning) break;
 
-  isRunning = true;
-  startButton.textContent = "Siklus Berjalan";
+    turnOffAllLights();
+    yellowLight.classList.add("active");
+    updateStatus("Bersiap");
+    await wait(2000);
 
-  function runCycle() {
-    turnOnRed();
+    if (!isRunning) break;
 
-    setTimeout(function () {
-      turnOnYellow();
+    turnOffAllLights();
+    greenLight.classList.add("active");
+    updateStatus("Jalan");
+    await wait(5000);
 
-      setTimeout(function () {
-        turnOnGreen();
+    if (!isRunning) break;
 
-        setTimeout(function () {
-          runCycle();
-        }, 3000);
-      }, 2000);
-    }, 3000);
+    turnOffAllLights();
+    yellowLight.classList.add("active");
+    updateStatus("Perlambat");
+    await wait(2000);
   }
-
-  runCycle();
 }
 
-startButton.addEventListener("click", startTrafficLightCycle);
+function startTrafficLight() {
+  if (!isRunning) {
+    isRunning = true;
+    runTrafficCycle();
+  }
+}
 
-turnOnRed();
+function stopTrafficLight() {
+  isRunning = false;
+  turnOffAllLights();
+  updateStatus("Mati");
+}
+
+window.onload = function () {
+  redLight.classList.add("active");
+};
