@@ -1,70 +1,360 @@
+/* Reset CSS - Menghapus style default browser */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Style untuk halaman utama */
 body {
-  background-color: #f5f5f5;
-  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  margin: 0;
+  overflow-x: hidden;
+  position: relative;
+  padding: 10px;
 }
 
+/* Background pattern untuk body */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  z-index: -1;
+}
+
+/* Container utama */
+.container {
+  text-align: center;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Style untuk judul aplikasi */
+.title {
+  color: white;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 300;
+  margin-bottom: clamp(20px, 3vw, 30px);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
+}
+
+/* Layout sistem lampu lalu lintas */
+.traffic-system {
+  display: flex;
+  gap: clamp(20px, 4vw, 40px);
+  align-items: center;
+  margin-bottom: clamp(20px, 4vw, 40px);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Container untuk lampu lalu lintas */
 .traffic-light-container {
-  background-color: #333;
-  width: 120px;
-  height: 320px;
-  border-radius: 10px;
+  background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
+  width: clamp(120px, 15vw, 140px);
+  height: clamp(320px, 40vw, 400px);
+  max-height: 90vh;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  padding: 15px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  padding: clamp(15px, 2vw, 20px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  backdrop-filter: blur(10px);
+  flex-shrink: 0;
 }
 
+/* Border efek saat lampu aktif */
+.traffic-light-container::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+  border-radius: 22px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+/* Border aktif dengan animasi */
+.traffic-light-container.active::before {
+  opacity: 1;
+  animation: borderGlow 2s linear infinite;
+}
+
+/* Animasi untuk border yang berkilau */
+@keyframes borderGlow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Style dasar untuk setiap lampu */
 .light {
-  width: 80px;
-  height: 80px;
+  width: clamp(70px, 12vw, 90px);
+  height: clamp(70px, 12vw, 90px);
   border-radius: 50%;
-  background-color: #555;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
-  transition: all 0.3s ease;
+  background: radial-gradient(circle at 30% 30%, #666, #333);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8), 0 2px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  cursor: pointer;
+  transform: scale(0.95);
+  touch-action: manipulation;
 }
 
+/* Efek kilau pada lampu */
+.light::before {
+  content: "";
+  position: absolute;
+  top: 15%;
+  left: 20%;
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Style lampu saat aktif */
+.light.active {
+  transform: scale(1);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.light.active::before {
+  opacity: 1;
+}
+
+/* Animasi pulse untuk lampu aktif */
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Style lampu merah saat aktif */
 .red.active {
-  background-color: #ff3030;
-  box-shadow: 0 0 20px #ff3030, inset 0 0 10px rgba(0, 0, 0, 0.2);
+  background: radial-gradient(circle at 30% 30%, #ff4444, #cc0000);
+  box-shadow: 0 0 30px #ff4444, 0 0 60px rgba(255, 68, 68, 0.5),
+    inset 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
+/* Style lampu kuning saat aktif */
 .yellow.active {
-  background-color: #ffff30;
-  box-shadow: 0 0 20px #ffff30, inset 0 0 10px rgba(0, 0, 0, 0.2);
+  background: radial-gradient(circle at 30% 30%, #ffdd44, #cc9900);
+  box-shadow: 0 0 30px #ffdd44, 0 0 60px rgba(255, 221, 68, 0.5),
+    inset 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
+/* Style lampu hijau saat aktif */
 .green.active {
-  background-color: #30ff30;
-  box-shadow: 0 0 20px #30ff30, inset 0 0 10px rgba(0, 0, 0, 0.2);
+  background: radial-gradient(circle at 30% 30%, #44ff44, #00cc00);
+  box-shadow: 0 0 30px #44ff44, 0 0 60px rgba(68, 255, 68, 0.5),
+    inset 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
-.runningLed {
-  background-color: #000;
-  color: #fff;
-  padding: 15px;
-  margin-top: 40px;
-  width: 250px;
-  border-radius: 8px;
+/* Panel informasi dan kontrol */
+.info-panel {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border-radius: 15px;
+  padding: clamp(15px, 3vw, 25px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  min-width: clamp(280px, 35vw, 300px);
+  max-width: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  flex: 1;
+  min-width: 0;
+}
+
+/* Text status sistem */
+.status {
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  font-weight: 600;
+  color: white;
+  margin-bottom: clamp(10px, 2vw, 15px);
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  word-break: break-word;
+}
+
+/* Timer countdown */
+.timer {
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 700;
+  color: #4ecdc4;
+  margin-bottom: clamp(15px, 3vw, 20px);
+  text-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+  font-family: "Courier New", monospace;
+}
+
+/* Container untuk tombol kontrol */
+.controls {
+  display: flex;
+  gap: clamp(8px, 2vw, 15px);
+  margin-bottom: clamp(15px, 3vw, 20px);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Style dasar untuk semua tombol */
+button {
+  padding: clamp(8px, 2vw, 12px) clamp(15px, 3vw, 25px);
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  touch-action: manipulation;
+  min-width: 80px;
+  white-space: nowrap;
+}
+
+/* Efek kilau pada tombol */
+button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+button:hover::before {
+  left: 100%;
+}
+
+/* Warna tombol Start */
+.start-btn {
+  background: linear-gradient(45deg, #4ecdc4, #44a08d);
+}
+
+/* Warna tombol Stop */
+.stop-btn {
+  background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+}
+
+/* Warna tombol Reset */
+.reset-btn {
+  background: linear-gradient(45deg, #ffa726, #ff7043);
+}
+
+/* Warna tombol Manual */
+.manual-btn {
+  background: linear-gradient(45deg, #9c27b0, #673ab7);
+}
+
+/* Efek hover pada tombol */
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Efek saat tombol ditekan */
+button:active {
+  transform: translateY(0);
+}
+
+/* Style tombol saat disabled */
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Panel teks berjalan */
+.running-led {
+  background: linear-gradient(45deg, #000, #1a1a1a);
+  color: #00ff00;
+  padding: clamp(10px, 2vw, 15px);
+  margin-top: clamp(20px, 4vw, 30px);
+  width: min(400px, 90vw);
+  border-radius: 10px;
   overflow: hidden;
   position: relative;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 255, 0, 0.1);
+  border: 1px solid #00ff00;
 }
 
-.runningLed > div {
+/* Efek garis scan pada LED */
+.running-led::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00ff00, transparent);
+  animation: scanLine 2s linear infinite;
+}
+
+/* Animasi garis scan */
+@keyframes scanLine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Text dalam panel LED */
+.running-led > div {
   white-space: nowrap;
   font-weight: bold;
-  position: relative;
-  animation: runText 10s linear infinite;
+  font-family: "Courier New", monospace;
+  animation: runText 15s linear infinite;
+  color: #00ff00;
+  text-shadow: 0 0 10px #00ff00;
+  font-size: clamp(0.8rem, 2vw, 1rem);
 }
 
+/* Animasi text berjalan */
 @keyframes runText {
   0% {
     transform: translateX(100%);
@@ -74,32 +364,209 @@ body {
   }
 }
 
-.controls {
-  margin-top: 30px;
-  display: flex;
-  gap: 15px;
+/* Container untuk statistik */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: clamp(8px, 2vw, 15px);
+  margin-top: clamp(15px, 3vw, 20px);
 }
 
-button {
-  padding: 10px 15px;
-  background-color: #4caf50;
+/* Item statistik individual */
+.stat-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: clamp(10px, 2vw, 15px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+/* Value angka statistik */
+.stat-value {
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  font-weight: bold;
+  color: #4ecdc4;
+  word-break: break-word;
+}
+
+/* Label statistik */
+.stat-label {
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 5px;
+}
+
+/* Indikator mode sistem */
+.mode-indicator {
+  position: absolute;
+  top: clamp(10px, 2vw, 20px);
+  right: clamp(10px, 2vw, 20px);
+  background: rgba(0, 0, 0, 0.7);
   color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s;
+  padding: clamp(8px, 1.5vw, 10px) clamp(12px, 2vw, 15px);
+  border-radius: 20px;
+  font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+  backdrop-filter: blur(10px);
+  z-index: 10;
 }
 
-button:hover {
-  background-color: #45a049;
+/* === MEDIA QUERIES - RESPONSIF === */
+
+/* Style untuk tablet */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .traffic-system {
+    gap: 30px;
+  }
+
+  .info-panel {
+    min-width: 320px;
+  }
 }
 
-button:active {
-  transform: scale(0.98);
+/* Style untuk mobile */
+@media (max-width: 768px) {
+  body {
+    padding: 15px 10px;
+  }
+
+  .title {
+    margin-bottom: 20px;
+  }
+
+  .traffic-system {
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .traffic-light-container {
+    width: min(140px, 40vw);
+    height: min(350px, 60vh);
+  }
+
+  .info-panel {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .controls {
+    grid-template-columns: repeat(2, 1fr);
+    display: grid;
+    gap: 10px;
+  }
+
+  .mode-indicator {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin-bottom: 20px;
+    display: inline-block;
+  }
 }
 
-.status {
-  margin-top: 20px;
-  font-weight: bold;
+/* Style untuk mobile kecil */
+@media (max-width: 480px) {
+  .traffic-light-container {
+    width: 120px;
+    height: 300px;
+  }
+
+  .light {
+    width: 70px;
+    height: 70px;
+  }
+
+  .controls button {
+    font-size: 0.8rem;
+    padding: 8px 12px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Style untuk layar besar */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1400px;
+  }
+
+  .traffic-system {
+    gap: 60px;
+  }
+}
+
+/* Style untuk orientasi landscape di mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  body {
+    justify-content: flex-start;
+    padding: 10px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+
+  .traffic-light-container {
+    height: 250px;
+    width: 100px;
+  }
+
+  .light {
+    width: 60px;
+    height: 60px;
+  }
+
+  .running-led {
+    margin-top: 15px;
+  }
+}
+
+/* Optimasi untuk layar DPI tinggi */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .light {
+    border: 0.5px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Optimasi untuk touch device */
+@media (pointer: coarse) {
+  .light {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Preferensi dark mode */
+@media (prefers-color-scheme: dark) {
+  .info-panel {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .stat-item {
+    background: rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Preferensi reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .light.active {
+    animation: none;
+  }
+
+  .running-led::before,
+  .running-led > div {
+    animation: none;
+  }
+
+  .traffic-light-container.active::before {
+    animation: none;
+    opacity: 0.8;
+  }
 }

@@ -1,28 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Pengaturan dasar halaman web -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Traffic Light</title>
-    <link rel="stylesheet" href="./css/styles.css" />
-    <script src="./js/script.js" defer></script>
+    <title>Smart Traffic Light System</title>
+
+    <!-- Link ke file CSS untuk styling -->
+    <link rel="stylesheet" href="css/styles.css" />
   </head>
+
   <body>
-    <div class="traffic-light-container">
-      <div class="light red"></div>
-      <div class="light yellow"></div>
-      <div class="light green"></div>
+    <!-- Indikator mode sistem (Otomatis/Manual) -->
+    <div class="mode-indicator" id="modeIndicator">Mode: Otomatis</div>
+
+    <!-- Container utama untuk seluruh konten -->
+    <div class="container">
+      <!-- Judul aplikasi -->
+      <h1 class="title">🚦 Smart Traffic System</h1>
+
+      <!-- Bagian utama sistem lampu lalu lintas -->
+      <div class="traffic-system">
+        <!-- Container untuk lampu lalu lintas -->
+        <div class="traffic-light-container" id="trafficContainer">
+          <div class="light red" id="redLight"></div>
+          <!-- Lampu merah -->
+          <div class="light yellow" id="yellowLight"></div>
+          <!-- Lampu kuning -->
+          <div class="light green" id="greenLight"></div>
+          <!-- Lampu hijau -->
+        </div>
+
+        <!-- Panel informasi dan kontrol -->
+        <div class="info-panel">
+          <!-- Status dan timer -->
+          <div class="status" id="status">Status: Siap</div>
+          <div class="timer" id="timer">00</div>
+
+          <!-- Tombol-tombol kontrol -->
+          <div class="controls">
+            <button class="start-btn" id="startBtn">🚀 Mulai</button>
+            <button class="stop-btn" id="stopBtn">⏹️ Berhenti</button>
+            <button class="reset-btn" id="resetBtn">🔄 Reset</button>
+            <button class="manual-btn" id="manualBtn">👆 Manual</button>
+          </div>
+
+          <!-- Statistik sistem -->
+          <div class="stats">
+            <!-- Jumlah siklus -->
+            <div class="stat-item">
+              <div class="stat-value" id="cycleCount">0</div>
+              <div class="stat-label">Siklus</div>
+            </div>
+
+            <!-- Total waktu berjalan -->
+            <div class="stat-item">
+              <div class="stat-value" id="totalTime">0s</div>
+              <div class="stat-label">Total Waktu</div>
+            </div>
+
+            <!-- Fase lampu saat ini -->
+            <div class="stat-item">
+              <div class="stat-value" id="currentPhase">-</div>
+              <div class="stat-label">Fase</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Teks berjalan informasi -->
+      <div class="running-led">
+        <div>
+          🚗 Selamat datang di Sistem Lampu Lalu Lintas Pintar! Selalu patuhi
+          rambu lalu lintas untuk keselamatan bersama! 🚦
+        </div>
+      </div>
     </div>
 
-    <div class="status">Status: Berhenti</div>
-
-    <div class="controls">
-      <button id="startBtn" onclick="startTrafficLight()">Mulai</button>
-      <button id="stopBtn" onclick="stopTrafficLight()">Berhenti</button>
-    </div>
-
-    <div class="runningLed">
-      <div>Hati-hati dalam berkendara! Patuhi lampu lalu lintas!</div>
-    </div>
+    <!-- Link ke file JavaScript -->
+    <script src="js/script.js"></script>
   </body>
 </html>
